@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# This migration creates the `recipe_foods` table.
+# It defines the columns `quantity`, `recipe_id`, and `food_id`.
+# It also adds foreign key constraints and indexes to establish relationships.
 class CreateRecipeFoods < ActiveRecord::Migration[7.0]
   def change
     create_table :recipe_foods do |t|

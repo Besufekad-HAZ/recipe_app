@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# This migration adds Devise authentication columns to the `users` table.
+# It adds columns for email, encrypted_password, reset_password_token,
+# reset_password_sent_at, remember_created_at, and indexes for email and
+# reset_password_token.
 class AddDeviseToUsers < ActiveRecord::Migration[7.0]
   def self.up
     change_table :users do |t|
