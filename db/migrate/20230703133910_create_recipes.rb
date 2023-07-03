@@ -10,7 +10,6 @@ class CreateRecipes < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_foreign_key :recipes, :users, column: :user_id
     add_index :recipes, :user_id
   end
 end

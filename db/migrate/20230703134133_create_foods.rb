@@ -9,7 +9,6 @@ class CreateFoods < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_foreign_key :foods, :users, column: :user_id
     add_index :foods, :user_id
   end
 end
