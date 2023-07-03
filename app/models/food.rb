@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # The Food class represents a food item in the application.
 class Food < ApplicationRecord
   belongs_to :user, class_name: 'User', foreign_key: 'user_id'

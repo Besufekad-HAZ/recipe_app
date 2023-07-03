@@ -10,56 +10,49 @@
 
 require 'rubygems'
 
-module BundlerLauncher
-  # This module provides methods for launching the Bundler application.
+m = Module.new do
   module_function
 
-  # Check if the launcher was invoked as a script.
   def invoked_as_script?
     File.expand_path($PROGRAM_NAME) == File.expand_path(__FILE__)
   end
 
-  # Retrieve the Bundler version specified as an environment variable.
   def env_var_version
     ENV['BUNDLER_VERSION']
   end
 
-  # Retrieve the Bundler version specified as a command-line argument.
   def cli_arg_version
-    return unless invoked_as_script?
-    return unless ARGV.first.to_s.start_with?('update')
+    return unless invoked_as_script? # don't want to hijack other binstubs
+    return unless 'update'.start_with?(ARGV.first || ' ') # must be running `bundle update`
 
     bundler_version = nil
     update_index = nil
     ARGV.each_with_index do |a, i|
-      if update_index && update_index.succ == i && a =~ Gem::Version::ANCHORED_VERSION_PATTERN
-        bundler_version = a
-      elsif a =~ /\A--bundler(?:[= ](#{Gem::Version::VERSION_PATTERN}))?\z/
-        bundler_version = Regexp.last_match(1)
-        update_index = i
-      end
-    end
+      bundler_version = a if update_index && update_index.succ == i && a =~ Gem::Version::ANCHORED_VERSION_PATTERN
+      next unless a =~ /\A--bundler(?:[= ](#{Gem::Version::VERSION_PATTERN}))?\z/
 
+      bundler_version = Regexp.last_match(1)
+      update_index = i
+    end
     bundler_version
   end
 
-  # Retrieve the path to the Gemfile.
   def gemfile
     gemfile = ENV['BUNDLE_GEMFILE']
-    return gemfile unless gemfile.nil? || gemfile.empty?
+    return gemfile if gemfile && !gemfile.empty?
 
     File.expand_path('../Gemfile', __dir__)
   end
 
-  # Retrieve the path to the lockfile.
   def lockfile
-    case File.basename(gemfile)
-    when 'gems.rb' then gemfile.sub(/\.rb$/, '.locked')
-    else "#{gemfile}.lock"
-    end
+    lockfile =
+      case File.basename(gemfile)
+      when 'gems.rb' then gemfile.sub(/\.rb$/, '.locked')
+      else "#{gemfile}.lock"
+      end
+    File.expand_path(lockfile)
   end
 
-  # Retrieve the Bundler version specified in the lockfile.
   def lockfile_version
     return unless File.file?(lockfile)
 
@@ -69,14 +62,13 @@ module BundlerLauncher
     Regexp.last_match(1)
   end
 
-  # Determine the required Bundler version.
   def bundler_requirement
-    @bundler_requirement ||= begin
-      env_var_version || cli_arg_version || bundler_requirement_for(lockfile_version)
-    end
+    @bundler_requirement ||=
+      env_var_version ||
+      cli_arg_version ||
+      bundler_requirement_for(lockfile_version)
   end
 
-  # Determine the required Bundler version based on the lockfile version.
   def bundler_requirement_for(version)
     return "#{Gem::Requirement.default}.a" unless version
 
@@ -85,27 +77,37 @@ module BundlerLauncher
     bundler_gem_version.approximate_recommendation
   end
 
-  # Load Bundler and activate the required version.
   def load_bundler!
     ENV['BUNDLE_GEMFILE'] ||= gemfile
 
     activate_bundler
   end
 
-  # Activate the required Bundler version.
   def activate_bundler
     gem_error = activation_error_handling do
       gem 'bundler', bundler_requirement
     end
-
     return if gem_error.nil?
 
     require_error = activation_error_handling do
       require 'bundler/version'
     end
-
     if require_error.nil? && Gem::Requirement.new(bundler_requirement).satisfied_by?(Gem::Version.new(Bundler::VERSION))
       return
     end
 
-    warn "Activating bundler (#{bundler_requirement}) failed:\n#{gem_error.message}\n\nTo install the version of bundler this project requires, run `gem install bundler -v '#{bundler_require
+    warn "Activating bundler (#{bundler_requirement}) failed:\n#{gem_error.message}\n\nTo install the version of bundler this project requires, run `gem install bundler -v '#{bundler_requirement}'`"
+    exit 42
+  end
+
+  def activation_error_handling
+    yield
+    nil
+  rescue StandardError, LoadError => e
+    e
+  end
+end
+
+m.load_bundler!
+
+load Gem.bin_path('bundler', 'bundle') if m.invoked_as_script?
