@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Devise::Controllers::Helpers
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
+
   protected
 
   helper_method :sort_column, :sort_direction
