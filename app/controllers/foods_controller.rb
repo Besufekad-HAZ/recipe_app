@@ -1,7 +1,6 @@
 class FoodsController < ApplicationController
-
   def index
-    @foods = current_user.foods.order(sort_column + " " + sort_direction)
+    @foods = current_user.foods.order("#{sort_column} #{sort_direction}")
   end
 
   def new
@@ -25,7 +24,6 @@ class FoodsController < ApplicationController
     redirect_to foods_path, notice: 'Food was successfully destroyed.'
   end
 
-
   private
 
   def food_params
@@ -33,15 +31,14 @@ class FoodsController < ApplicationController
   end
 
   def sortable_columns
-    ["name", "measurement_unit", "price", "quantity"]
+    %w[name measurement_unit price quantity]
   end
 
   def sort_column
-    sortable_columns.include?(params[:sort]) ? params[:sort] : "name"
+    sortable_columns.include?(params[:sort]) ? params[:sort] : 'name'
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
-
 end
