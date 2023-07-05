@@ -45,7 +45,7 @@ class RecipesController < ApplicationController
     food_quantities.each do |food_id, quantity|
       next if quantity.to_i < 1
 
-      recipe.recipe_foods.create(food_id: food_id, quantity: quantity.to_i)
+      recipe.recipe_foods.create(food_id:, quantity: quantity.to_i)
     end
   end
 end
