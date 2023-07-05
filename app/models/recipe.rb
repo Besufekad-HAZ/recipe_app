@@ -15,4 +15,3 @@ class Recipe < ApplicationRecord
     recipe_foods.joins(:food).sum('recipe_foods.quantity * foods.price')
   end
 end
-
