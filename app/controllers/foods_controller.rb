@@ -10,10 +10,14 @@ class FoodsController < ApplicationController
   def create
     @food = current_user.foods.build(food_params)
 
-    if @food.save
-      redirect_to foods_path, notice: 'Food was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      if @food.save
+        format.html { redirect_to foods_path, notice: 'Food was successfully created.' }
+        format.json { render :show, status: :created, location: @food }
+      else
+        format.html { render :new }
+        format.json { render json: @food.errors, status: :unprocessable_entity }
+      end
     end
   end
 
