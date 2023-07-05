@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ .recipe {
+   text-align: center;
+ }
+
+ .recipelist {
+   display: grid;
+   grid-template-columns: 15% 15% 15% 15% 15% 15% ;
+ }
