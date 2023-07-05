@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  recipe: one
+  quantity: 1
   food: one
-  quantity: 1.5
+  recipe: one
 
 two:
-  recipe: two
+  quantity: 1
   food: two
-  quantity: 1.5
+  recipe: two

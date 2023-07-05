@@ -1,0 +1,28 @@
+<h1>Food List</h1>
+
+<p><%= link_to 'Add Food', new_food_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= sortable 'name' %></th>
+      <th><%= sortable 'measurement_unit' %></th>
+      <th><%= sortable 'price' %></th>
+      <th><%= sortable 'quantity' %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @foods.each do |food| %>
+      <tr>
+        <td><%= food.name %></td>
+        <td><%= food.measurement_unit %></td>
+        <td><%= number_to_currency(food.price) %></td>
+        <td><%= food.quantity %></td>
+        <td>
+          <%= button_to 'DELETE', food_path(food), method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
