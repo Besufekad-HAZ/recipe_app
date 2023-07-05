@@ -3,7 +3,7 @@ class RecipesController < ApplicationController
 
   def index
     @user = current_user
-    @recipes = @user.recipes
+    @recipes = @user.recipes.includes(:foods)
   end
 
   def new
@@ -23,7 +23,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find_by(id: params[:id])
+    @recipe = Recipe.includes(:foods).find_by(id: params[:id])
   end
 
   def destroy

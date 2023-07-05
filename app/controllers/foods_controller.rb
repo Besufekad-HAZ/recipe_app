@@ -1,6 +1,6 @@
 class FoodsController < ApplicationController
   def index
-    @foods = current_user.foods.order("#{sort_column} #{sort_direction}")
+    @foods = current_user.foods.includes(:recipes).order("#{sort_column} #{sort_direction}")
   end
 
   def new
