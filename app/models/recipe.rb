@@ -10,4 +10,9 @@ class Recipe < ApplicationRecord
   validates :preparation_time, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :cooking_time, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :description, presence: true
+
+  def total_price
+    recipe_foods.joins(:food).sum('recipe_foods.quantity * foods.price')
+  end
 end
+
