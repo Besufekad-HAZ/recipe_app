@@ -4,21 +4,10 @@
 <p><%= link_to 'Add Recipe', new_recipe_path %></p>
 
 <table>
-  <thead>
-    <tr>
-      <th><%=  'name' %></th>
-      <th><%=  'preparation time' %></th>
-      <th><%=  'cooking time' %></th>
-      <th><%=  'Description' %></th>
-      <th>Actions</th>
-    </tr>
-  </thead>
   <tbody>
     <% @recipes.each do |recipe| %>
-      <tr>
-        <td><%= recipe.name %></td>
-        <td><%= recipe.preparation_time %></td>
-        <td><%= recipe.cooking_time %></td>
+      <tr class="tr1">
+        <td>Recipe<%= recipe.id %></td>
         <td><%= recipe.description %></td>
         <td>
           <%= button_to 'REMOVE', recipe_path(recipe), method: :delete %>
