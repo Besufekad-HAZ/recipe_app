@@ -33,3 +33,18 @@
   align-items: center;
   padding-left: 2rem;
 }
+
+.public-container {
+  display: grid;
+  grid-template-columns: 20% 20%;
+  row-gap: 3rem;
+  border: 2px solid black;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+}
+
+.header-title {
+  text-align: center;
+}
