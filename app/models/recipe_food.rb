@@ -1,5 +1,7 @@
 # The RecipeFood class represents the association between a recipe and a food item in the application.
 class RecipeFood < ApplicationRecord
-  belongs_to :recipe
-  belongs_to :food
+  belongs_to :food, class_name: 'Food', foreign_key: 'food_id'
+  belongs_to :recipe, class_name: 'Recipe', foreign_key: 'recipe_id'
+
+  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end

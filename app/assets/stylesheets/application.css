@@ -21,3 +21,15 @@
   display: grid;
   grid-template-columns: 15% 15% 15% 15% 15% 15%;
 }
+
+.tr1 {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  border: 1px solid black;
+  height: 7rem;
+  row-gap: 5rem;
+  width: 40rem;
+  margin-left: 5rem;
+  align-items: center;
+  padding-left: 2rem;
+}
