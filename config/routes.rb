@@ -14,9 +14,12 @@ Rails.application.routes.draw do
   resources :foods, except: [:update]
   resources :recipes do
      patch 'toggle', on: :member
-   end
-
+  end
+  resources :recipes do
+  patch 'toggle_public', on: :member
+  end
+  get 'general_shopping_list_index', to: 'general_shopping_list#index'
   get '/public_recipes', to: 'public_recipes#index'
-
+  get 'recipes/:recipe_id/recipe_foods/new', to: 'recipe_foods#new', as: 'new_recipe_recipe_food'
   root to: 'public_recipes#index'
 end
