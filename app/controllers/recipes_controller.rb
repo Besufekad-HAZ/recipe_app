@@ -6,6 +6,7 @@ class RecipesController < ApplicationController
     @recipes = @user.recipes.includes(:foods)
   end
 
+
   def new
     @recipe = Recipe.new
   end
@@ -28,6 +29,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.includes(:foods).find_by(id: params[:id])
     @recipe.public = @recipe.public?
   end
+
 
   def toggle
     @recipe = Recipe.find(params[:id])
