@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :recipes, except: [:update]
   resources :foods, except: [:update]
+  resources :recipes do
+     patch 'toggle', on: :member
+   end
 
   get '/public_recipes', to: 'public_recipes#index'
 

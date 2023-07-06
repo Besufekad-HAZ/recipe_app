@@ -1,5 +1,6 @@
 class Ability
   include CanCan::Ability
+
   def initialize(user)
     user ||= User.new # guest user
     return unless user.present? # additional permissions for logged in users

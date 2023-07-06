@@ -1,11 +1,30 @@
-<p style="color: green"><%= notice %></p>
+   <h1><%= @recipe.name %></h1>
 
-<%= render @recipe %>
+   <p><%= @recipe.description %></p>
 
-<div>
-  <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
-  <%= link_to "Back to recipes", recipes_path %>
+   <% if current_user == @recipe.user || @recipe.public? %>
+     <!-- Display recipe details -->
+     <!-- Add your desired wireframe code here -->
+   <% else %>
+     <!-- Show a message or redirect to a different page -->
+     <p>This recipe is private or you are not the owner.</p>
+   <% end %>
 
-  <%= button_to "Destroy this recipe", @recipe, method: :delete %>
-</div>
+   <% if current_user == @recipe.user %>
+     <%= form_with(model: @recipe, url: toggle_recipe_path(@recipe), method: :patch) do |f| %>
+       <%= f.check_box :public %>
+       <%= f.label :public, "Make Public" %>
+       <%= f.submit "Save" %>
+     <% end %>
+   <% end %>
 
+   <div>
+     <% if current_user == @recipe.user %>
+       <%= link_to "Add new food", new_food_path(recipe_id: @recipe.id) %>
+     <% end %>
+
+     <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+     <%= link_to "Back to recipes", recipes_path %>
+
+     <%= button_to "Destroy this recipe", @recipe, method: :delete %>
+   </div>

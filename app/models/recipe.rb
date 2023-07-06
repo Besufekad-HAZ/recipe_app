@@ -11,6 +11,8 @@ class Recipe < ApplicationRecord
   validates :cooking_time, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :description, presence: true
 
+  attr_accessor :public
+
   def total_price
     recipe_foods.joins(:food).sum('recipe_foods.quantity * foods.price')
   end
