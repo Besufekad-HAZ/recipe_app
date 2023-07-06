@@ -54,7 +54,6 @@
 }
 
 .table {
-  /* border: 1px solid black; */
   width: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -104,4 +103,25 @@ tr {
 
 .logout {
   margin-left: 40rem;
+  cursor: pointer;
+  width: 5rem;
+}
+
+.loginfrm {
+  margin-left: 30rem;
+  margin-right: auto;
+  background-color: rgb(189, 186, 186);
+  width: 20rem;
+  height: 20rem;
+  padding: 1rem;
+}
+
+.signupfrm {
+  margin-left: 30rem;
+  margin-right: auto;
+  background-color: rgb(189, 186, 186);
+  width: 20rem;
+  height: 20rem;
+  padding: 1rem;
+
 }
