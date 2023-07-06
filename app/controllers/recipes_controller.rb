@@ -30,20 +30,15 @@ class RecipesController < ApplicationController
     @recipe.public = @recipe.public?
   end
 
-
   def toggle
     @recipe = Recipe.find(params[:id])
     if current_user == @recipe.user
-    @recipe.update(public: !@recipe.public?)
+      @recipe.update(public: !@recipe.public?)
+      flash.notice = "Recipe privacy has been updated."
+      # Add the following line to set the public attribute to true
+      @recipe.update(public: true) if @recipe.public?
     end
     redirect_to recipe_path(@recipe)
-  end
-
-  def destroy
-    @recipe = Recipe.find_by(id: params[:id])
-    @recipe.recipe_foods.destroy_all
-    @recipe.destroy
-    redirect_to recipes_path, notice: 'Recipe was successfully destroyed.'
   end
 
   private

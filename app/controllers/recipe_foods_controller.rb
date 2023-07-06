@@ -1,5 +1,6 @@
 class RecipeFoodsController < ApplicationController
   before_action :set_recipe_food, only: %i[show edit update destroy]
+  before_action :set_recipe, only: %i[new create]
 
   def index
     @recipe_foods = RecipeFood.all
@@ -10,12 +11,12 @@ class RecipeFoodsController < ApplicationController
   end
 
   def create
-    @recipe_food = RecipeFood.new(recipe_food_params)
+    @recipe_food = @recipe.recipe_foods.build(recipe_food_params)
 
     if @recipe_food.save
-      redirect_to recipe_food_url(@recipe_food), notice: 'Recipe food was successfully created.'
+      redirect_to new_recipe_recipe_food_path(@recipe)
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -36,6 +37,10 @@ class RecipeFoodsController < ApplicationController
 
   def set_recipe_food
     @recipe_food = RecipeFood.find(params[:id])
+  end
+
+  def set_recipe
+    @recipe = Recipe.find(params[:recipe_id])
   end
 
   def recipe_food_params
