@@ -8,8 +8,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  # Add the following route for signing out
+  resources :users, only: [:show]
   resources :recipes, except: [:update]
   resources :foods, except: [:update]
 
-  root to: 'recipes#index'
+  get '/public_recipes', to: 'public_recipes#index'
+
+  root to: 'public_recipes#index'
 end

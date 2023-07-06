@@ -33,3 +33,75 @@
   align-items: center;
   padding-left: 2rem;
 }
+
+.public-container {
+  display: grid;
+  grid-template-columns: 20% 20%;
+  row-gap: 3rem;
+  border: 2px solid black;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+}
+
+.header-title {
+  text-align: center;
+}
+
+.food-list {
+  text-align: center;
+}
+
+.table {
+  /* border: 1px solid black; */
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  border-collapse: collapse;
+}
+
+.litem {
+  border: 1px solid black;
+  text-align: center;
+}
+
+tr {
+  height: 4rem;
+}
+
+.btn-food {
+  display: flex;
+  margin-left: 60rem;
+  border-width: 1px;
+  background-color: rgb(238, 229, 229);
+  width: 5rem;
+  border-radius: 1rem;
+  height: 2rem;
+  align-items: center;
+  padding: 0.1rem;
+  color: white;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2rem;
+  margin-left: 1rem;
+  list-style: none;
+  font-family: sans-serif;
+  font-size: larger;
+  background-color: rgb(241, 234, 234);
+  height: 4rem;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logout {
+  margin-left: 40rem;
+}

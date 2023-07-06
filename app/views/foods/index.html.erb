@@ -1,27 +1,27 @@
-<h1>Food List</h1>
+<h1 class="food-list">Food List</h1>
 
-<p><%= link_to 'Add Food', new_food_path %></p>
+<p class="btn-food"><%= link_to 'Add Food', new_food_path %></p>
 
-<table>
+<table class="table">
   <thead>
-    <tr>
-      <th><%= sortable 'name' %></th>
-      <th><%= sortable 'measurement_unit' %></th>
-      <th><%= sortable 'price' %></th>
-      <th><%= sortable 'quantity' %></th>
-      <th>Actions</th>
+    <tr class="litem">
+      <th class="litem"><%= sortable 'name' %></th class="litem">
+      <th class="litem"><%= sortable 'measurement_unit' %></th class="litem">
+      <th class="litem"><%= sortable 'price' %></th class="litem">
+      <th class="litem"><%= sortable 'quantity' %></th class="litem">
+      <th class="litem">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @foods.each do |food| %>
-      <tr>
-        <td><%= food.name %></td>
-        <td><%= food.measurement_unit %></td>
-        <td><%= number_to_currency(food.price) %></td>
-        <td><%= food.quantity %></td>
-        <td>
+      <tr class="litem">
+        <td class="litem"><%= food.name %></td class="litem">
+        <td class="litem"><%= food.measurement_unit %></td class="litem">
+        <td class="litem"><%= number_to_currency(food.price) %></td class="litem">
+        <td class="litem"><%= food.quantity %></td class="litem">
+        <td class="litem">
           <%= button_to 'DELETE', food_path(food), method: :delete %>
-        </td>
+        </td class="litem">
       </tr>
     <% end %>
   </tbody>

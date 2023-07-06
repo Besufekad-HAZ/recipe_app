@@ -5,7 +5,9 @@
 
 <table>
   <tbody>
+   <br>
     <% @recipes.each do |recipe| %>
+      
       <tr class="tr1">
         <td><%= recipe.id %>.<%= recipe.name %></td>
         <td><%= recipe.description %></td>
@@ -13,6 +15,9 @@
           <%= button_to 'REMOVE', recipe_path(recipe), method: :delete %>
         </td>
       </tr>
+     
     <% end %>
   </tbody>
+ 
 </table>
+ 
