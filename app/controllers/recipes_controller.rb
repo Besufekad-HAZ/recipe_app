@@ -10,21 +10,19 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new
   end
 
-def create
-  @recipe = Recipe.new(recipe_params.except(:food_quantities))
-  @recipe.user = current_user
-  if @recipe.save
-    food_quantities = recipe_params[:food_quantities]
-    food_quantities&.each do |food_id, quantity|
-      unless quantity.to_i < 1
-        @recipe.recipe_foods.create(food_id: food_id, quantity: quantity.to_i, recipe_id: @recipe.id)
+  def create
+    @recipe = Recipe.new(recipe_params.except(:food_quantities))
+    @recipe.user = current_user
+    if @recipe.save
+      food_quantities = recipe_params[:food_quantities]
+      food_quantities&.each do |food_id, quantity|
+        @recipe.recipe_foods.create(food_id:, quantity: quantity.to_i, recipe_id: @recipe.id) unless quantity.to_i < 1
       end
+      redirect_to recipes_path, notice: 'Recipe was successfully created.'
+    else
+      render :new
     end
-    redirect_to recipes_path, notice: 'Recipe was successfully created.'
-  else
-    render :new
   end
-end
 
   def show
     @recipe = Recipe.includes(:foods).find_by(id: params[:id])
