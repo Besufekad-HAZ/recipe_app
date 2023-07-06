@@ -48,3 +48,40 @@
 .header-title {
   text-align: center;
 }
+
+.food-list {
+  text-align: center;
+}
+
+.table{
+  /* border: 1px solid black; */
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  border-collapse: collapse;
+}
+
+tr,
+th,
+td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+tr {
+  height: 4rem;
+}
+
+.btn-food {
+  display: flex;
+  margin-left: 60rem;
+  border-width: 1px;
+  background-color: rgb(238, 229, 229);
+  width: 5rem;
+  border-radius: 1rem;
+  height: 2rem;
+  align-items: center;
+  padding: 0.1rem;
+  color: white;
+}
