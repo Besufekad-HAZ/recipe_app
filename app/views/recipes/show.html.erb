@@ -1,5 +1,9 @@
 <h2 class='header-title'><%= @recipe.name %></h2>
 
+<div class="row btn-back">
+  <%= link_to "Back", "/recipes/#{@recipe.id}" %>
+</div>
+
 <% if can?(:update, @recipe) || @recipe.public %>
   <div class='preparation-toggle'>
     <div>
@@ -51,10 +55,10 @@
     <td> <%= recipe_food.food.name %> </td>
     <td><%= "#{recipe_food.quantity} kg" %></td>
     <td><%= recipe_food.quantity * recipe_food.food.price %>$</td>
-    <%if can?(:update,@recipe)%>
-    <td><%= button_to 'Delete',recipe_recipe_food_path(@recipe,recipe_food),method: :delete, class: 'btn btn-danger' %></td>
-    <td><button class='btn btn-success'>Modify </button> <td>
-    <%end%>
+    <% if can?(:update, @recipe) %>
+      <td><%= button_to 'Delete', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, class: 'btn btn-danger' %></td>
+      <td><%= button_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food), class: 'btn btn-success' %></td>
+    <% end %>
   </tr>
 
  <%end%>
