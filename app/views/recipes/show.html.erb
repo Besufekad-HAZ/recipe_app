@@ -1,7 +1,7 @@
 <h2 class='header-title'><%= @recipe.name %></h2>
 
 <div class="row btn-back">
-  <%= link_to "Back", "/recipes/#{@recipe.id}" %>
+  <%= link_to "Back", public_recipes_path %>
 </div>
 
 <% if can?(:update, @recipe) || @recipe.public %>

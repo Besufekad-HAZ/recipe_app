@@ -14,7 +14,7 @@ class RecipeFoodsController < ApplicationController
     @recipe_food = @recipe.recipe_foods.build(recipe_food_params)
 
     if @recipe_food.save
-      redirect_to new_recipe_recipe_food_path(@recipe)
+      redirect_to public_recipes_path, notice: 'Recipe was successfully created.'
     else
       render :new
     end
