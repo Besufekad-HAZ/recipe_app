@@ -1,0 +1,21 @@
+<h1>General Shopping List</h1>
+
+<p>Total Food Items: <%= @missing_foods.count %></p>
+<p>Total Price: <%= @total_price %></p>
+
+<table>
+Expand All
+	@@ -13,13 +13,13 @@
+    </tr>
+  </thead>
+  <tbody>
+    <% @missing_foods.each do |name, quantity| %>
+      <tr>
+        <td><%= name %></td>
+        <td><%= @general_food_list.find_by(name: name).measurement_unit %></td>
+        <td><%= @general_food_list.find_by(name: name).price %></td>
+        <td><%= quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
