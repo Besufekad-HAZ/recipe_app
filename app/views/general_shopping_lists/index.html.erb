@@ -1,32 +1,37 @@
-<h1>General Shopping List</h1>
+<h1 class="total-missing">General Shopping List</h1>
 
-<p>Total Food Items: <%= @missing_foods.count %></p>
-<p>Total Price: <%= @total_price %></p>
+<% if @missing_foods.any? %>
+  <% @total_items = @missing_foods.length %>
+  <% @total_price = 0 %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Measurement Unit</th>
-      <th>Price</th>
-      <th>Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @missing_foods.each do |missing_food| %>
+  <table class="shopping-list-table">
+    <thead>
       <tr>
-        <td><%= missing_food[:name] %></td>
-        <% general_food = @general_food_list.find_by(name: missing_food[:name]) %>
-        <% if general_food %>
-          <td><%= general_food.measurement_unit %></td>
-          <td><%= general_food.price %></td>
-        <% else %>
-          <td>N/A</td>
-          <td>N/A</td>
-        <% end %>
-        <td><%= missing_food[:quantity] %></td>
+        <th>Food Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @missing_foods.each do |food| %>
+        <% food_object = Food.new(food) %>
+        <% food_price = food_object.price || 0 %>
+        <% food_quantity = food_object.quantity || 0 %>
+        <% @total_price += food_price * food_quantity %>
+        <tr>
+          <td><%= food_object.name %></td>
+          <td><%= food_quantity %></td>
+          <td><%= food_price * food_quantity %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
+  <div class="total-missing">
+    <p><strong>Total Missing Food Items:</strong> <%= @total_items %> </p>
+    <p><strong>Total Price of Missing Food:</strong> <%= @total_price %></p>
+  </div>
+
+<% else %>
+  <p>No missing food items.</p>
+<% end %>
