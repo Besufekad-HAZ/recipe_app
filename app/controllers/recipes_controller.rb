@@ -13,9 +13,14 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params.except(:food_quantities))
     @recipe.user = current_user
-
     if @recipe.save
-      create_recipe_foods(@recipe, recipe_params[:food_quantities])
+      food_quantities = recipe_params[:food_quantities]
+      food_quantities&.each do |food_id, quantity|
+        unless quantity.to_i < 1
+          @recipe.recipe_foods.create(food_id:, quantity: quantity.to_i,
+                                      recipe_id: @recipe.id)
+        end
+      end
       redirect_to recipes_path, notice: 'Recipe was successfully created.'
     else
       render :new
@@ -24,6 +29,7 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.includes(:foods).find_by(id: params[:id])
+    @recipe.public = @recipe.public?
   end
 
   def destroy
@@ -33,10 +39,23 @@ class RecipesController < ApplicationController
     redirect_to recipes_path, notice: 'Recipe was successfully destroyed.'
   end
 
+  def toggle
+    @recipe = Recipe.find(params[:id])
+    if current_user == @recipe.user
+      @recipe.update(public: !@recipe.public?)
+      flash.notice = 'Recipe privacy has been updated.'
+
+      # Add the following line to set the public attribute to true
+      @recipe.update(public: true) if @recipe.public?
+    end
+    redirect_to recipe_path(@recipe)
+  end
+
   private
 
   def recipe_params
-    params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public, food_quantities: {})
+    params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public, :user_id,
+                                   food_quantities: {})
   end
 
   def create_recipe_foods(recipe, food_quantities)

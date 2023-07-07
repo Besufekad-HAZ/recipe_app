@@ -13,27 +13,27 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="form-field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: "form-input" %>
   </div>
 
-  <div>
+  <div class="form-field">
     <%= form.label :measurement_unit %>
-    <%= form.text_field :measurement_unit %>
+    <%= form.text_field :measurement_unit, class: "form-input" %>
   </div>
 
-  <div>
+  <div class="form-field">
     <%= form.label :price %>
-    <%= form.text_field :price %>
+    <%= form.text_field :price, class: "form-input" %>
   </div>
 
-  <div>
+  <div class="form-field">
     <%= form.label :quantity %>
-    <%= form.text_field :quantity %>
+    <%= form.text_field :quantity, class: "form-input" %>
   </div>
 
-  <div>
-    <%= form.submit 'Create Food' %>
+  <div class="form-actions">
+    <%= form.submit 'Create Food', class: "form-button" %>
   </div>
 <% end %>
