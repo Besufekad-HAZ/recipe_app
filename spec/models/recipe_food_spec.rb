@@ -12,7 +12,6 @@ RSpec.describe RecipeFood, type: :model do
     @recipe_food = RecipeFood.create!(quantity: 10, food: @food, recipe: @recipe)
   end
 
-
   it 'test value method' do
     expect(@recipe_food.food.price).to eql 2
     expect(@recipe_food.value).to eql 20
