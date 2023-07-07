@@ -135,7 +135,6 @@ tr {
   grid-template-columns: 60% 50%;
 }
 
-<!-- toggle button --->
 .toggle-container {
   display: flex;
   align-items: center;
