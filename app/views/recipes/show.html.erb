@@ -34,7 +34,7 @@
   </div>
 
   <div class="preparation-toggle">
-    <%= button_to 'Generate shopping list', general_shopping_list_index_path, method: :get, class: 'btn btn-primary generator' %>
+    <%= button_to "Generate shopping list", general_shopping_lists_path, method: :get, class: "btn btn-primary generator " %>
     <% if can?(:update, @recipe) %>
       <%= button_to 'Add Ingredient', new_recipe_recipe_food_path(@recipe), method: :get, class: 'btn btn-primary generator' %>
     <% end %>

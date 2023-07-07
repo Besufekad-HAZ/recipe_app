@@ -14,14 +14,21 @@ class GeneralShoppingListsController < ApplicationController
   def calculate_missing_foods
     general_food_quantities = @general_food_list.group(:name).sum(:quantity)
     recipe_food_quantities = @recipes.flat_map { |recipe| recipe.foods.group(:name).sum(:quantity) }
+    p "PLEASE recipes #{@recipes.each {|recipe| recipe.foods}} "
+    p "recipe_food_quantities #{recipe_food_quantities}"
 
-    missing_foods = {}
-    recipe_food_quantities.each do |name, quantity|
-      if general_food_quantities[name].to_i < quantity
-        missing_foods[name] = quantity - general_food_quantities[name].to_i
+    missing_foods = []
+    missing_food = {}
+    recipe_food_quantities.each do |food_hash|
+      food_hash.each do |name, quantity|
+        if general_food_quantities[name].to_i < quantity
+          missing_food[name] = quantity - general_food_quantities[name].to_i
+        end
+        missing_foods << missing_food
       end
     end
 
+    p "HERE PLEASE missing_foods #{missing_foods}"
     missing_foods
   end
 
