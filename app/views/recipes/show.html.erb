@@ -6,17 +6,20 @@
       <p><strong>Preparation time: <%= @recipe.preparation_time %> <% if @recipe.preparation_time > 1 %>hours<% else %>hour<% end %></strong></p>
     </div>
  <div>
-      <% if can?(:update, @recipe) %>
-        <%= form_with(model: @recipe, url: toggle_recipe_path(@recipe), method: :patch) do |form| %>
-          <% if @recipe.public %>
-            <%= form.submit 'Make Private', class: 'btn btn-danger' %>
-          <% else %>
-            <%= form.submit 'Make Public', class: 'btn btn-primary' %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+  <% if can?(:update, @recipe) %>
+    <%= form_with(model: @recipe, url: toggle_recipe_path(@recipe), method: :patch, local: true) do |form| %>
+      <div class="toggle-switch-container">
+        <span>Private</span>
+        <label class="toggle-switch">
+          <%= form.check_box :public, { checked: @recipe.public, class: 'toggle-switch-input', onchange: 'this.form.submit()' } %>
+          <span class="toggle-switch-slider"></span>
+        </label>
+        <span>Public</span>
+      </div>
+      <%= form.submit '', class: 'toggle-switch-submit' %>
+    <% end %>
+  <% end %>
+</div>
 
   <div class='preparation-toggle'>
     <p><strong>Cooking time: <%= @recipe.cooking_time %> <% if @recipe.cooking_time > 1 %>hours<% else %>hour<% end %></strong></p>

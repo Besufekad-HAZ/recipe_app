@@ -38,14 +38,8 @@ class RecipesController < ApplicationController
 
   def toggle
     @recipe = Recipe.find(params[:id])
-    if current_user == @recipe.user
-      @recipe.update(public: !@recipe.public?)
-      flash.notice = "Recipe privacy has been updated."
-
-      # Add the following line to set the public attribute to true
-      @recipe.update(public: true) if @recipe.public?
-    end
-    redirect_to recipe_path(@recipe)
+    @recipe.update(public: !@recipe.public)
+    redirect_to @recipe, notice: 'Recipe public status updated.'
   end
 
   private
