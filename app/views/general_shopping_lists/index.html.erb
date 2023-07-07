@@ -4,18 +4,29 @@
 <p>Total Price: <%= @total_price %></p>
 
 <table>
-Expand All
-	@@ -13,13 +13,13 @@
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Measurement Unit</th>
+      <th>Price</th>
+      <th>Quantity</th>
     </tr>
   </thead>
   <tbody>
-    <% @missing_foods.each do |name, quantity| %>
+    <% @missing_foods.each do |missing_food| %>
       <tr>
-        <td><%= name %></td>
-        <td><%= @general_food_list.find_by(name: name).measurement_unit %></td>
-        <td><%= @general_food_list.find_by(name: name).price %></td>
-        <td><%= quantity %></td>
+        <td><%= missing_food[:name] %></td>
+        <% general_food = @general_food_list.find_by(name: missing_food[:name]) %>
+        <% if general_food %>
+          <td><%= general_food.measurement_unit %></td>
+          <td><%= general_food.price %></td>
+        <% else %>
+          <td>N/A</td>
+          <td>N/A</td>
+        <% end %>
+        <td><%= missing_food[:quantity] %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
