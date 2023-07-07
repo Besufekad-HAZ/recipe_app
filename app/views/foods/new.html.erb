@@ -1,5 +1,4 @@
-<h1>Add Food</h1>
-
+<h1 class="form-actions">Add Food</h1>
 <%= form_with(model: @food, url: foods_path) do |form| %>
   <% if @food.errors.any? %>
     <div id="error_explanation">

@@ -5,7 +5,7 @@
 </div>
 
 <% if can?(:update, @recipe) || @recipe.public %>
-  <div class='preparation-toggle'>
+  <div class='recipe-container'>
     <div>
       <p><strong>Preparation time: <%= @recipe.preparation_time %> <% if @recipe.preparation_time > 1 %>hours<% else %>hour<% end %></strong></p>
     </div>
@@ -33,8 +33,8 @@
     <p><strong>Recipe steps:</strong> <%= @recipe.description %></p>
   </div>
 
-  <div class="preparation-toggle">
-    <%= button_to 'Generate shopping list', general_shopping_list_index_path, method: :get, class: 'btn btn-primary generator' %>
+  <div class="preparation-btns ">
+    <%= button_to "Generate shopping list", general_shopping_lists_path, method: :get, class: "btn btn-primary generator " %>
     <% if can?(:update, @recipe) %>
       <%= button_to 'Add Ingredient', new_recipe_recipe_food_path(@recipe), method: :get, class: 'btn btn-primary generator' %>
     <% end %>
