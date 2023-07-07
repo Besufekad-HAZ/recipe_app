@@ -1,22 +1,37 @@
 <h2 class='header-title'><%= @recipe.name %></h2>
-
+<div class="recipe-details">
 <% if can?(:update, @recipe) || @recipe.public %>
-  <div class='preparation-toggle'>
+  
     <div>
       <p><strong>Preparation time: <%= @recipe.preparation_time %> <% if @recipe.preparation_time > 1 %>hours<% else %>hour<% end %></strong></p>
     </div>
- <div>
-      <% if can?(:update, @recipe) %>
-        <%= form_with(model: @recipe, url: toggle_recipe_path(@recipe), method: :patch) do |form| %>
-          <% if @recipe.public %>
-            <%= form.submit 'Make Private', class: 'btn btn-danger' %>
-          <% else %>
-            <%= form.submit 'Make Public', class: 'btn btn-primary' %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+
+<div class="toggle-container">
+  <% if can?(:update, @recipe) %>
+    <%= form_with(model: @recipe, url: toggle_recipe_path(@recipe), method: :patch) do |form| %>
+      <div class="toggle">
+        <input type="checkbox" id="toggle-checkbox" <%= @recipe.public ? '' : 'checked' %> hidden>
+        <label for="toggle-checkbox" class="slider"></label>
+      </div>
+      <span class="toggle-caption">
+        <span class="public-caption">Public</span>
+        
+      </span>
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+ 
 
   <div class='preparation-toggle'>
     <p><strong>Cooking time: <%= @recipe.cooking_time %> <% if @recipe.cooking_time > 1 %>hours<% else %>hour<% end %></strong></p>
@@ -26,13 +41,13 @@
     <p><strong>Recipe steps:</strong> <%= @recipe.description %></p>
   </div>
 
-  <div class="preparation-toggle">
+  <div class="preparation-toggle1">
     <%= button_to 'Generate shopping list', general_shopping_list_index_path, method: :get, class: 'btn btn-primary generator' %>
     <% if can?(:update, @recipe) %>
       <%= button_to 'Add Ingredient', new_recipe_recipe_food_path(@recipe), method: :get, class: 'btn btn-primary generator' %>
     <% end %>
   </div>
-
+</div> 
   <table class="table table-bordered table-striped">
 <thead>
 <tr>
