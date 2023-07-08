@@ -1,0 +1,17 @@
+
+<h1>Recipes List</h1>
+
+<p><%= link_to 'Add Recipe', new_recipe_path %></p>
+
+<table class="tb">
+  
+    <% @recipes.each do |recipe| %>
+
+      <tr class="tr1">
+        <td><b><%=recipe.name%> <%= recipe.id %></b><br><br><%= button_to 'REMOVE', recipe_path(recipe), method: :delete %></td>
+        <td><h4><%= recipe.description %></h4></td>
+      </tr>
+    <% end %>
+    
+</table>
+

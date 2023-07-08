@@ -1,0 +1,38 @@
+<h1 class="form-actions">Add Food</h1>
+<%= form_with(model: @food, url: foods_path) do |form| %>
+  <% if @food.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@food.errors.count, "error") %> prohibited this food from being saved:</h2>
+
+      <ul>
+        <% @food.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-field">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-input" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :measurement_unit %>
+    <%= form.text_field :measurement_unit, class: "form-input" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :price %>
+    <%= form.text_field :price, class: "form-input" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :quantity %>
+    <%= form.text_field :quantity, class: "form-input" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit 'Create Food', class: "form-button" %>
+  </div>
+<% end %>
