@@ -5,14 +5,19 @@
 
 <table>
   <tbody>
+   <br>
     <% @recipes.each do |recipe| %>
+
       <tr class="tr1">
-        <td><%= recipe.id %>.<%= recipe.name %></td>
+        <td><%= recipe.id %>.<%= link_to recipe.name, recipe_path(recipe) %></td>
         <td><%= recipe.description %></td>
         <td>
           <%= button_to 'REMOVE', recipe_path(recipe), method: :delete %>
         </td>
       </tr>
+
     <% end %>
   </tbody>
+
 </table>
+

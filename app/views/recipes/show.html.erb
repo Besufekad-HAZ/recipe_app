@@ -1,11 +1,70 @@
-<p style="color: green"><%= notice %></p>
+<h2 class='header-title'><%= @recipe.name %></h2>
 
-<%= render @recipe %>
-
-<div>
-  <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
-  <%= link_to "Back to recipes", recipes_path %>
-
-  <%= button_to "Destroy this recipe", @recipe, method: :delete %>
+<div class="row btn-back">
+  <%= link_to "Back", public_recipes_path %>
 </div>
 
+<% if can?(:update, @recipe) || @recipe.public %>
+  <div class='recipe-container'>
+    <div>
+      <p><strong>Preparation time: <%= @recipe.preparation_time %> <% if @recipe.preparation_time > 1 %>hours<% else %>hour<% end %></strong></p>
+    </div>
+ <div>
+  <% if can?(:update, @recipe) %>
+    <%= form_with(model: @recipe, url: toggle_recipe_path(@recipe), method: :patch, local: true) do |form| %>
+      <div class="toggle-switch-container">
+        <span>Private</span>
+        <label class="toggle-switch">
+          <%= form.check_box :public, { checked: @recipe.public, class: 'toggle-switch-input', onchange: 'this.form.submit()' } %>
+          <span class="toggle-switch-slider"></span>
+        </label>
+        <span>Public</span>
+      </div>
+      <%= form.submit '', class: 'toggle-switch-submit' %>
+    <% end %>
+  <% end %>
+</div>
+
+  <div class='preparation-toggle'>
+    <p><strong>Cooking time: <%= @recipe.cooking_time %> <% if @recipe.cooking_time > 1 %>hours<% else %>hour<% end %></strong></p>
+  </div>
+
+  <div class='preparation-toggle'>
+    <p><strong>Recipe steps:</strong> <%= @recipe.description %></p>
+  </div>
+
+  <div class="preparation-btns ">
+    <%= button_to "Generate shopping list", general_shopping_lists_path, method: :get, class: "btn btn-primary generator " %>
+    <% if can?(:update, @recipe) %>
+      <%= button_to 'Add Ingredient', new_recipe_recipe_food_path(@recipe), method: :get, class: 'btn btn-primary generator' %>
+    <% end %>
+  </div>
+
+  <table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th> Food </th>
+<th> Quantity </th>
+<th> Value </th>
+<th> Actions </th>
+ </tr>
+ </thead>
+ <tbody>
+ <%@recipe.recipe_foods.each do |recipe_food|%>
+ <tr>
+    <td> <%= recipe_food.food.name %> </td>
+    <td><%= "#{recipe_food.quantity} kg" %></td>
+    <td><%= recipe_food.quantity * recipe_food.food.price %>$</td>
+    <% if can?(:update, @recipe) %>
+      <td><%= button_to 'Delete', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, class: 'btn btn-danger' %></td>
+      <td><%= button_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food), class: 'btn btn-success' %></td>
+    <% end %>
+  </tr>
+
+ <%end%>
+ </tbody>
+
+<table>
+<%else%>
+<h2 class='header-title'> This recipe is private </h2>
+<%end%>
