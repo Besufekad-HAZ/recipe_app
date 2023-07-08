@@ -3,21 +3,15 @@
 
 <p><%= link_to 'Add Recipe', new_recipe_path %></p>
 
-<table>
-  <tbody>
-   <br>
+<table class="tb">
+  
     <% @recipes.each do |recipe| %>
 
       <tr class="tr1">
-        <td><%= recipe.id %>.<%= link_to recipe.name, recipe_path(recipe) %></td>
-        <td><%= recipe.description %></td>
-        <td>
-          <%= button_to 'REMOVE', recipe_path(recipe), method: :delete %>
-        </td>
+        <td><b><%=recipe.name%> <%= recipe.id %></b><br><br><%= button_to 'REMOVE', recipe_path(recipe), method: :delete %></td>
+        <td><h4><%= recipe.description %></h4></td>
       </tr>
-
     <% end %>
-  </tbody>
-
+    
 </table>
 
